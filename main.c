@@ -2,8 +2,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #define MAX_EXPRESSION_LENGTH 50
+#define INIT_NUMBERS_LENGTH 25
 
 bool input_validation(const char *expression, const int len) {
     int digit_count = 0;
@@ -13,6 +15,9 @@ bool input_validation(const char *expression, const int len) {
 
     for (int i = 0; i < len; i++) {
         if (isdigit(expression[i])) {
+            while (i < len && isdigit(expression[i])) {
+                i++;
+            }
             digit_count++;
         }
         else if (strchr(valid_operators, expression[i]) != NULL) {
