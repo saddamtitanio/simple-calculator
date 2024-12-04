@@ -115,6 +115,7 @@ int main() {
         expression[strcspn(expression, "\n")] = 0;
 
         if (!input_validation(expression, strlen(expression)) || !isBalanced(expression)) {
+            printf("%d %d\n", !input_validation(expression, strlen(expression)), !isBalanced(expression));
             printf("Expression invalid!\n\n");
         }
 

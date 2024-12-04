@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include "balance.h"
-
 #define MAX 100
 
 typedef struct
@@ -34,8 +32,8 @@ bool isBalanced(const char *str) {
             if (isEmpty(&stack)) {
                 push(&stack, str[i]);
             }
-            else if (getTopParantheses(stack) == '(' && str[i] == ')' || 
-            getTopParantheses(stack) == '[' && str[i] == ']') {
+            else if ((getTopParantheses(stack) == '(' && str[i] == ')') ||
+                    (getTopParantheses(stack) == '[' && str[i] == ']')) {
                 pop(&stack);
             }
             else {
