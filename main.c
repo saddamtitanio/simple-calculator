@@ -33,11 +33,39 @@ bool input_validation(const char *expression, const int len) {
     return true;
 }
 
+void separator(int **numbers, char **operators, const char *expression, const int len) {
+    int d_count = 0;
+
+    *numbers = malloc(sizeof(int) * 50);
+    *operators = malloc(sizeof(char) * 50);
+
+    for (int i = 0; i < len; i++) {
+        if (isdigit(expression[i])) {
+            int num = 0;
+            while (i < len && isdigit(expression[i])) {
+                num = num * 10 + (expression[i++] - '0');
+            }
+            if (d_count == INIT_NUMBERS_LENGTH - 1) {
+                *numbers = realloc(*numbers, sizeof(int) * d_count * 2);
+                if (!*numbers) {
+                    fprintf(stderr, "Memory allocation failed.\n");
+                    exit(EXIT_FAILURE);
+                }
+            }
+            (*numbers)[d_count++] = num;   
+        }
+    }
+    *numbers = realloc(*numbers, d_count * sizeof(int));
+}
+
 int main() {
     char expression[MAX_EXPRESSION_LENGTH + 1];
     char ch;
     int count = 0;
     
+    int *numbers = NULL;
+    char *operators =  NULL;
+
     printf("==== SIMPLE CALCULATOR ====\n");
 
     do {
@@ -49,4 +77,10 @@ int main() {
             printf("Expression invalid!\n\n");
         }
     } while (!input_validation(expression, strlen(expression)));
+
+    separator(&numbers, &operators, expression, strlen(expression));
+
+    for (int i = 0; i < sizeof(numbers) / sizeof(numbers[0]); i++) {
+        printf("%d ", numbers[i]);
+    }
 }
